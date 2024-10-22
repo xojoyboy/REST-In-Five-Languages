@@ -1,0 +1,29 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        // run the client
+        {
+            "name": "Demo Client",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "dev"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        },
+        // run the server
+        {
+            "type": "node-terminal",
+            "name": "Typescript Server",
+            "request": "launch",
+            "command": "ts-node src/server/server.ts",
+            "cwd": "${workspaceFolder}"
+        },
+    ]
+}
