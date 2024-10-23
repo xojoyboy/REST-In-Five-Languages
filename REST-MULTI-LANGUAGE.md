@@ -18,7 +18,7 @@ The client application will allow you to test the functionality of the server.
   npm run dev
   ```
 - Ensure that the client is communicating with the TypeScript server by setting the **port to 5001**.
-- Ensure that the client is communicating with the Python server by setting the **port to 5002**.
+
 
 #### Run the TypeScript Server
 The TypeScript server is located under `src/servers/ts-server/`.
@@ -32,6 +32,7 @@ The TypeScript server is located under `src/servers/ts-server/`.
 The Python server is located under `src/servers/python-server/`
 
 Instructions for setting up and running the Python server can be found in the `README.md` file in the `src/servers/python-server` directory
+- Ensure that the client is communicating with the Python server by setting the **port to 5002**. (it is set up this way)
 
 
 
