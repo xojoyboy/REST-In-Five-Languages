@@ -22,7 +22,7 @@
             "type": "node-terminal",
             "name": "Typescript Server",
             "request": "launch",
-            "command": "ts-node src/server/server.ts",
+            "command": "ts-node src/servers/ts-server/server.ts",
             "cwd": "${workspaceFolder}"
         },
     ]

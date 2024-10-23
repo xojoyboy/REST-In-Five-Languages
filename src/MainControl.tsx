@@ -2,23 +2,34 @@ import React, { useState } from 'react';
 import { Box, Button, Paper, Stack, TextField, Typography, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 import axios from 'axios';
 
+/**
+ * MainControl component manages CRUD operations and test execution for user-related endpoints.
+ * It provides a UI for selecting endpoints, performing CRUD operations, and running test suites.
+ */
 const MainControl: React.FC = () => {
+    // State variables to manage different endpoints and user data
     const [endpoint1, setEndpoint1] = useState('5001');
-    const [endpoint2, setEndpoint2] = useState('');
-    const [endpoint3, setEndpoint3] = useState('');
+    const [endpoint2, setEndpoint2] = useState('5002');
+    const [endpoint3, setEndpoint3] = useState(''); // CHANGEME to reflect the port number of the third endpoint
+    const [endpoint4, setEndpoint4] = useState(''); // CHANGEME to reflect the port number of the fourth endpoint
     const [selectedEndpoint, setSelectedEndpoint] = useState('endpoint1');
     const [jsonResult, setJsonResult] = useState('');
     const [userId, setUserId] = useState('');
     const [userName, setUserName] = useState('');
     const [hoursToAdd, setHoursToAdd] = useState('');
     const [testName, setTestName] = useState('');
-    const [testWait, setTestWait] = useState(100);
+    const [testWait, setTestWait] = useState(100); // Default wait time for tests
     const [isRunningTests, setIsRunningTests] = useState(false);
 
+    /**
+     * Returns the base URL for the selected endpoint.
+     * If the selected endpoint is not provided, it alerts the user.
+     * @returns {string} Base URL for the selected endpoint.
+     */
     const getBaseUrl = (): string => {
         let port = '';
 
-        // Figure out which port to use
+        // Determine which port to use based on selectedEndpoint
         switch (selectedEndpoint) {
             case 'endpoint1':
                 if (!endpoint1) {
@@ -41,6 +52,13 @@ const MainControl: React.FC = () => {
                 }
                 port = endpoint3;
                 break;
+            case 'endpoint4':
+                if (!endpoint4) {
+                    alert('Please provide an endpoint');
+                    return '';
+                }
+                port = endpoint4;
+                break;
             default:
                 alert('Please provide an endpoint');
                 return '';
@@ -49,28 +67,29 @@ const MainControl: React.FC = () => {
         const baseUrl = `http://localhost:${port}`;
         return baseUrl;
     };
+
     let resultTmp = '';
 
+    /**
+     * Handles CRUD operations for the user endpoints.
+     * @param {string} method - The HTTP method to perform (GET_ALL, POST, PUT, DELETE, etc.).
+     * @param {number} id - The user ID (optional, default is 0).
+     * @param {string} name - The user name (optional).
+     * @param {number} hours - Hours to add (optional, default is -1).
+     * @param {boolean} checkWithUser - Whether to ask the user for confirmation before certain operations.
+     */
     const handleCrudOperation = async (method: string, id: number = 0, name: string = '', hours: number = -1, checkWithUser: boolean = false) => {
         const baseUrl = getBaseUrl();
         if (!baseUrl) return;
 
-        if (id === 0) {
-            id = Number(userId);
-        }
-
-        if (name === '') {
-            name = userName;
-        }
-
-        if (hours === -1) {
-            hours = Number(hoursToAdd);
-        }
-
-
+        // Fallback to state values if parameters are not provided
+        if (id === 0) id = Number(userId);
+        if (name === '') name = userName;
+        if (hours === -1) hours = Number(hoursToAdd);
 
         try {
             let response;
+            // Switch case to handle different HTTP methods
             switch (method) {
                 case 'GET_ALL':
                     response = await axios.get(`${baseUrl}/users`);
@@ -81,7 +100,6 @@ const MainControl: React.FC = () => {
                     }
                     response = await axios.delete(`${baseUrl}/users`);
                     break;
-
                 case 'GET':
                     response = await axios.get(`${baseUrl}/users/${id}`);
                     break;
@@ -95,16 +113,15 @@ const MainControl: React.FC = () => {
                     response = await axios.patch(`${baseUrl}/users/${id}`, { hoursToAdd: Number(hours) });
                     break;
                 case 'DELETE':
-                    if (checkWithUser && !window.confirm('Are you sure you want to delete user ?')) {
+                    if (checkWithUser && !window.confirm('Are you sure you want to delete user?')) {
                         return;
                     }
-
                     response = await axios.delete(`${baseUrl}/users/${id}`);
-
                     break;
                 default:
                     throw new Error('Unsupported operation');
             }
+            // Format the response data as JSON and update state
             const jsonTmp = JSON.stringify(response.data, null, 2);
             console.log(jsonTmp);
             resultTmp = jsonTmp;
@@ -115,6 +132,50 @@ const MainControl: React.FC = () => {
         }
     };
 
+    /**
+     * Adds a delay in the execution.
+     * @param {number} ms - The number of milliseconds to wait.
+     * @returns {Promise<void>} A promise that resolves after the delay.
+     */
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    /**
+     * Runs a single test by performing a CRUD operation and comparing the result with expected values.
+     * @param {string} testName - Name of the test.
+     * @param {string} operation - CRUD operation to perform.
+     * @param {number} id - User ID for the operation.
+     * @param {string} name - User name for the operation.
+     * @param {number} hours - Hours to add for the operation.
+     * @param {string} expected - Expected result string.
+     * @param {string} notExpected - A result string that should not be found.
+     */
+    const runTest = async (testName: string, operation: string, id: number, name: string, hours: number, expected: string = '', notExpected: string = '') => {
+        if (expected === '' && notExpected === '') {
+            alert('Please provide expected or notExpected value');
+            return;
+        }
+        if (expected !== '' && notExpected !== '') {
+            alert('Please provide either expected or notExpected value, not both');
+            return;
+        }
+
+        setTestName(testName);
+        await handleCrudOperation(operation, id, name, hours);
+
+        // Verify the result
+        if (expected !== '' && !resultTmp.includes(expected)) {
+            alert(`Failed test ${testName}: Expected ${expected} but got ${resultTmp}`);
+        }
+        if (notExpected !== '' && resultTmp.includes(notExpected)) {
+            alert(`Failed test ${testName}: Not expecting ${notExpected} but got ${resultTmp}`);
+        }
+        await delay(testWait);
+    };
+
+    /**
+     * Runs a suite of tests in sequence.
+     * It includes operations like adding, updating, and deleting users.
+     */
     const runTestSuite = async () => {
         setIsRunningTests(true);
         const baseUrl = getBaseUrl();
@@ -123,125 +184,29 @@ const MainControl: React.FC = () => {
             return;
         }
 
-        const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-        // 
-
         try {
-            // start off with deleting all users
-            setTestName('DELETE ALL USERS');
-            await handleCrudOperation('DELETE_ALL');
-            // check that the result is an empty array
-            if (resultTmp !== '[]') {
-                alert(`Failed to get all users expecting [] and got ${resultTmp}`);
-                return;
+            await runTest('DELETE ALL USERS', 'DELETE_ALL', 0, '', 0, '[]');
+            await runTest('GET ALL USERS', 'GET_ALL', 0, '', 0, '[]');
+            await runTest('ADD USER', 'POST', 0, 'Test User', 0, 'Test User');
+            await runTest('GET USER', 'GET', 1, '', 0, 'Test User');
+            await runTest('ADD USER', 'POST', 0, 'Another User', 0, 'Another User');
+            await runTest('UPDATE USER', 'PUT', 1, 'Updated User', 0, 'Updated User');
+            await runTest('ADD HOURS', 'PATCH', 1, '', 5, '5');
+
+            // Add 10 users
+            for (let i = 0; i < 10; i++) {
+                await runTest('ADD USER', 'POST', 0, `User ${i}`, 0, `User ${i}`);
             }
 
-            await delay(testWait);
+            // Check that the 10th user is in the list
+            await runTest('GET ALL USERS', 'GET_ALL', 0, '', 0, 'User 9');
 
-            // Test GET_ALL
-            setTestName('GET ALL USERS');
-            await handleCrudOperation('GET_ALL');
-            // check that the result is an empty array
-            if (resultTmp !== '[]') {
-                alert(`Failed to get all users expecting [] and got ${resultTmp}`);
-            }
+            // Test DELETE returns the deleted user
+            await runTest('DELETE USER', 'DELETE', 12, '', 0, 'User 9');
 
+            // Test DELETE has actually deleted the user
+            await runTest('GET ALL USERS', 'GET_ALL', 0, '', 0, 'User 8');
 
-            await delay(testWait);
-
-            // Add a user
-            setTestName('ADD USER');
-            setUserName('Test User');
-            await handleCrudOperation('POST', 0, 'Test User', 0);
-            // check that the result is the user we added
-            if (!resultTmp.includes('Test User')) {
-                alert('Failed to add user');
-            }
-
-
-            await delay(testWait);
-
-            // Test GET
-            setTestName('GET USER');
-            setUserId('1');
-            await handleCrudOperation('GET', 1, '', 0);
-            // check that the result is the user we added
-            if (!resultTmp.includes('Test User')) {
-                alert('Failed to get user');
-            }
-
-
-            await delay(testWait);
-
-            // Test POST
-            setTestName('ADD USER');
-            setUserName('Another User');
-
-            await handleCrudOperation('POST', 0, 'Another User', 0);
-
-
-            await delay(testWait);
-
-            // Test PUT
-            setTestName('UPDATE USER');
-            setUserId('1');
-            setUserName('Updated User');
-            await handleCrudOperation('PUT', 1, 'Updated User', 0);
-            // check that the result is the user we updated
-            if (!resultTmp.includes('Updated User')) {
-                alert('Failed to update user');
-            }
-
-
-            await delay(testWait);
-
-            // Test PATCH
-            setTestName('ADD HOURS');
-            setUserId('1');
-            setHoursToAdd('5');
-            await handleCrudOperation('PATCH', 1, '', 5);
-            // check that the result is the user we updated
-            if (!resultTmp.includes('5')) {
-                alert('Failed to add hours');
-            }
-
-
-            await delay(testWait);
-
-            // add 9 users
-            for (let i = 0; i < 9; i++) {
-                setTestName('ADD USER');
-                setUserName(`User ${i}`);
-                await handleCrudOperation('POST', 0, `User ${i}`, 0);
-                await delay(testWait);
-            }
-
-
-            await delay(testWait);
-
-            // get all the users
-            setTestName('GET ALL USERS');
-            await handleCrudOperation('GET_ALL');
-            // check that the 'User 8' is in the list
-            if (!resultTmp.includes('User 8')) {
-                alert('Failed to get all users');
-            }
-
-
-            await delay(testWait);
-
-            // Test DELETE
-            setTestName('DELETE USER');
-            setUserId('10');
-            await handleCrudOperation('DELETE', 10, '', 0);
-            // check that the result is missing User 8
-            if (resultTmp.includes('User 8')) {
-                alert('Failed to delete user');
-            }
-
-
-            await delay(testWait);
             setTestName('Test Suite Completed');
         } catch (error) {
             const err = error as any;
@@ -259,38 +224,62 @@ const MainControl: React.FC = () => {
                         value={selectedEndpoint}
                         onChange={(e) => setSelectedEndpoint(e.target.value)}
                     >
+                        {/* Radio buttons for selecting endpoints */}
                         <Stack direction="row" alignItems="center">
-                            <FormControlLabel value="endpoint1" control={<Radio />} label="Endpoint 1" />
+                            <FormControlLabel value="endpoint1" control={<Radio />} label="Typescript" />
                             <TextField
-                                label="Endpoint 1 Port"
+                                label="Typescript Port"
                                 value={endpoint1}
                                 onChange={(e) => setEndpoint1(e.target.value)}
                                 fullWidth
                                 margin="normal"
+                                slotProps={{
+                                    input: {
+                                        readOnly: true
+                                    }
+                                }}
                             />
                         </Stack>
                         <Stack direction="row" alignItems="center">
-                            <FormControlLabel value="endpoint2" control={<Radio />} label="Endpoint 2" />
+                            <FormControlLabel value="endpoint2" control={<Radio />} label="Python" />
                             <TextField
-                                label="Endpoint 2 Port"
+                                label="Python Port"
                                 value={endpoint2}
                                 onChange={(e) => setEndpoint2(e.target.value)}
                                 fullWidth
                                 margin="normal"
+                                slotProps={{
+                                    input: {
+                                        readOnly: true
+                                    }
+                                }}
                             />
                         </Stack>
+                        {/* Additional endpoints  change the names below. CHANGEME */}
                         <Stack direction="row" alignItems="center">
                             <FormControlLabel value="endpoint3" control={<Radio />} label="Endpoint 3" />
                             <TextField
-                                label="Endpoint 3 Port"
+                                label="CHANGEME 3 Port"
                                 value={endpoint3}
                                 onChange={(e) => setEndpoint3(e.target.value)}
                                 fullWidth
                                 margin="normal"
+
                             />
                         </Stack>
-
+                        <Stack direction="row" alignItems="center">
+                            <FormControlLabel value="endpoint4" control={<Radio />} label="Endpoint 4" />
+                            <TextField
+                                label="CHANGEME 4 Port"
+                                value={endpoint4}
+                                onChange={(e) => setEndpoint4(e.target.value)}
+                                fullWidth
+                                margin="normal"
+                            />
+                        </Stack>
                     </RadioGroup>
+
+                    {/* Test suite controls */}
                     <Typography variant="h6">Test Manager</Typography>
                     <Stack direction="row" spacing={2} alignItems="center">
                         {isRunningTests ? (
@@ -298,7 +287,7 @@ const MainControl: React.FC = () => {
                                 STOP TEST SUITE
                             </Button>
                         ) : (
-                            <Button variant="contained" color="primary" onClick={runTestSuite} >
+                            <Button variant="contained" color="primary" onClick={runTestSuite}>
                                 RUN TEST SUITE
                             </Button>
                         )}
@@ -307,6 +296,8 @@ const MainControl: React.FC = () => {
                         <Typography variant="h6">Current Test: {testName}</Typography>
                     </Stack>
                 </Paper>
+
+                {/* CRUD Operations controls */}
                 <Paper elevation={3} sx={{ padding: 2, flex: 1 }}>
                     <Typography variant="h6">CRUD Operations</Typography>
                     <Stack spacing={2}>
@@ -387,10 +378,11 @@ const MainControl: React.FC = () => {
                                 margin="normal"
                             />
                         </Stack>
-
                     </Stack>
                 </Paper>
-                <Paper elevation={3} sx={{ padding: 2, flex: 1 }}>
+
+                {/* JSON results display */}
+                <Paper elevation={3} sx={{ padding: 2, flex: 1, maxHeight: 600, overflow: 'auto' }}>
                     <Typography variant="h6">JSON Results</Typography>
                     <pre>{jsonResult}</pre>
                 </Paper>
