@@ -10,8 +10,11 @@ Your assignment is to extend the existing project by implementing two additional
 
 #### Run the Client Tester
 The client application will allow you to test the functionality of the server.
-- To run the client tester, use the command:
+- To run the client tester,
+- Clone the repository then cd into the directory
+- use the command:
   ```bash
+  npm install
   npm run dev
   ```
 - Ensure that the client is communicating with the TypeScript server by setting the **port to 5001**.
