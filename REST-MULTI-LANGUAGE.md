@@ -65,29 +65,50 @@ The test suite implements the following sequence of operations to verify the ser
 You are allowed to use ChatGPT or any other generative AI tools to help generate code for this assignment. Make sure you understand the code and can explain how it works.  In fact, the purpose of this assigment is for you to develop skills in using generativeAI tools to build software.  You are encouraged to use these tools to help you complete the assignment.
 
 ### Assignment Requirements
-Your task is to implement at least two additional servers that provide the same RESTful functionality. Each server should be placed under `src/servers/<language-server>/`. You may choose any programming languages you are comfortable with (e.g., Java, C#, Ruby).
+Your task is to implement at least two additional servers that provide the same RESTful functionality. Each server should be placed under `src/servers/<language-server>/`. You may choose any programming languages you are comfortable with (e.g., Java, C#, Ruby, Go, etc.).
 
 For each server:
 - **Directory Structure**: Place each server in a separate directory under `src/servers/`. For example, `src/servers/erlang-server/` or `src/servers/java-server/`.
 - **Functionality**: Ensure that each server has the same endpoints and functionality as the TypeScript server.
 - **Port Configuration**: Set each new server to run on a different port locally (e.g., 5003, 5004) to avoid conflicts.
 - **README.md**: Include a `README.md` file in each server directory explaining how to set up and run the server. This README should provide:
-  - Dependencies required (e.g., `pip install` for Python).
+  - A step by step guide to set up the server.  
+    - If possible test on mac and windows.
+    - Specify which platforms you have tested on.
+  - Installation requirements.
   - Commands to start the server.
   - Any additional setup instructions.
-  - Update the code in MainControl.tsx to indicate what languages you chose.  Search for CHANGEME in the code to find where to make the changes 
+
+- **Tester Update**: Update the code in MainControl.tsx to indicate what languages you chose.  Search for `CHANGEME` in the code to find where to make the changes 
 
 ### Grading Criteria
-- **Functionality**: Each of the three servers (TypeScript and the two additional servers) must pass the test suite outlined above.
+- **Functionality**: Each of the two servers (The two additional servers) must pass the test suite outlined above.
+- **Consistency**: Ensure that the endpoints and responses are consistent with the TypeScript server.
 - **Code Quality**: Ensure your code is clean, well-commented, and follows best practices for the chosen language.
 - **Documentation**: Provide clear instructions in the `README.md` for each server.
+
+### Grade Calculation
+- You get 5 points for each server you implement up to a maximum of 10. 
+- If your README.md contains errors and the TA or professor cannot run the server then the server is not complete.
+  - it is really important to make sure that this `README.md` is correct and that the server can be run by the TA or professor.
+  - If the server cannot be run, then the server is not complete.
+- A server is considered complete if the tester runs the suite against your server and it passes all tests.
+  - Apart from making the changes in the tester where you find `CHANGEME` you should not need to make any changes to the tester.
+- Additional servers will make you happy and joyful.
 
 ### Team Testing
 Before submission, have a team member clone your repository and follow the setup instructions literally to ensure everything works as expected. This will help catch any issues or missing details in your documentation.
 
 ### Submission Instructions
+- Fork the repository and make a private github repository for your team.
+- Add the instructor and TA as collaborators to your repository.
+  - Instructor `sillyfunnypedro`
+  - Bella `beibeixx`
+  - Edward `edwardzhang415-163`
+
 - Submit your project repository containing the following:
-  - **src/servers/ts-server/** (TypeScript server)
+  - **src/servers/ts-server/** (TypeScript server already there)
+  - **src/servers/python-server/** (Python server already there)
   - **src/servers/<language1-server>/** (First additional server)
   - **src/servers/<language2-server>/** (Second additional server)
 - Ensure all servers are functional and can be tested using the client application.
