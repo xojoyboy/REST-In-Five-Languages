@@ -19,7 +19,11 @@ The client application will allow you to test the functionality of the server.
   ```
 - The client is set up to communicate with the TypeScript server on **port 5001** and the Python server on **port 5002**.
 <img src="./assets/tester.jpg" alt="Client Tester" width="700">
-- in the left panel you can set the port numbers for your two servers. You can see that the typescript and python servers are already set up, and you cannot change them.  You will need to add two more servers to the tester and set the port numbers for those servers.  You will also need to update the code in the tester to indicate what languages you chose.  Search for `CHANGEME` in the code to find where to make the changes.
+- In the left panel you can set the port numbers for your two servers. 
+  - You can see that the typescript and python servers are already set up, and you cannot change them.  
+  - You will need to add two more servers to the tester and set the port numbers for those servers.  
+  - You will also need to update the code in the tester to indicate what languages you chose.  
+    - Search for `CHANGEME` in the code to find where to make the changes.
 - In the middle panel you can test inidividual routes to your server
 - In the right panel you can see the response text (if it is an error) or the response data (if it is a success).
 
