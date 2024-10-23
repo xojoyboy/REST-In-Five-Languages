@@ -108,12 +108,7 @@ For each server:
 Before submission, have a team member clone your repository and follow the setup instructions literally to ensure everything works as expected. This will help catch any issues or missing details in your documentation.
 
 ### Submission Instructions
-- Fork the repository and make a private github repository for your team.
-- Add the instructor and TA as collaborators to your repository.
-  - Instructor `sillyfunnypedro`
-  - Bella `beibeixx`
-  - Edward `edwardzhang415-163`
-
+- Fork the repository and make a public github repository for your team.
 - Submit your project repository containing the following:
   - **src/servers/ts-server/** (TypeScript server already there)
   - **src/servers/python-server/** (Python server already there)
