@@ -65,12 +65,12 @@ The test suite implements the following sequence of operations to verify the ser
 You are allowed to use ChatGPT or any other generative AI tools to help generate code for this assignment. Make sure you understand the code and can explain how it works.  In fact, the purpose of this assigment is for you to develop skills in using generativeAI tools to build software.  You are encouraged to use these tools to help you complete the assignment.
 
 ### Assignment Requirements
-Your task is to implement two additional servers that provide the same RESTful functionality. Each server should be placed under `src/servers/<language-server>/`. You may choose any programming languages you are comfortable with (e.g., Java, C#, Ruby).
+Your task is to implement at least two additional servers that provide the same RESTful functionality. Each server should be placed under `src/servers/<language-server>/`. You may choose any programming languages you are comfortable with (e.g., Java, C#, Ruby).
 
 For each server:
-- **Directory Structure**: Place each server in a separate directory under `src/servers/`. For example, `src/servers/python-server/` or `src/servers/java-server/`.
+- **Directory Structure**: Place each server in a separate directory under `src/servers/`. For example, `src/servers/erlang-server/` or `src/servers/java-server/`.
 - **Functionality**: Ensure that each server has the same endpoints and functionality as the TypeScript server.
-- **Port Configuration**: Set each new server to run on a different port locally (e.g., 5002, 5003) to avoid conflicts.
+- **Port Configuration**: Set each new server to run on a different port locally (e.g., 5003, 5004) to avoid conflicts.
 - **README.md**: Include a `README.md` file in each server directory explaining how to set up and run the server. This README should provide:
   - Dependencies required (e.g., `pip install` for Python).
   - Commands to start the server.
@@ -91,5 +91,15 @@ Before submission, have a team member clone your repository and follow the setup
   - **src/servers/<language1-server>/** (First additional server)
   - **src/servers/<language2-server>/** (Second additional server)
 - Ensure all servers are functional and can be tested using the client application.
+
+### How to approach this assignment.
+- Start by reading both the TypeScript and the Python server code to understand how the server works.
+- Choose a language you are comfortable with and start implementing the server.
+- Use the existing servers code to interact with your generativeAI tool to help you generate the code for the new servers.
+- Test your server using the client application to ensure it works as expected.
+- Understand how this server is implemented in your two languages of choice.
+- Explain the code to your other team members so they can understand how it works.
+- If you get stuck, reach out to your team members or the instructor for help.
+- If you get two languages done really quickly, consider adding a third language to the project.
 
 Good luck, and feel free to reach out if you have any questions!
