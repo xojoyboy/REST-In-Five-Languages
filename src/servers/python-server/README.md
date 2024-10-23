@@ -34,7 +34,7 @@ python server.py
 #### Additional Notes
 <ul>
 <li> Ensure that the virtual environment is activated before running the server.</li>
-<li> The server will run on port 5002. You can change this if you want in the python code</li>
+<li> The server will run on port 5002. You can change this if you want in the python code, please dont, there is no need</li>
 </ul>
 
 
