@@ -42,9 +42,11 @@ The Python server is located under `src/servers/python-server/`
 Instructions for setting up and running the Python server can be found in the `README.md` file in the `src/servers/python-server` directory
 - Ensure that the client is communicating with the Python server by setting the **port to 5002**. (it is set up this way)
 
+#### Routes for the server.
+- All routes for the server are documented in the file ROUTES.md
 
 
-#### 3. Test CRUD Operations
+#### Test CRUD Operations
 - Use the fields in the client application to enter parameters for different CRUD operations.
 - You can test the following endpoints:
   - **GET all users**
