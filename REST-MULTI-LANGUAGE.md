@@ -3,6 +3,9 @@
 
 ## Assignment: Implement a RESTful API in Multiple Languages (in addition to typescript and python)
 
+## Class exercise
+we will implement the server in rust so you in class so you can experience the process.   This, unfortunately, means that you cannot choose rust as one of your languages for this assignment.
+
 ### Objective
 Your assignment is to extend the existing project by implementing two additional servers that replicate the functionality of the TypeScript server and the Python server that implement the routes in `ROUTES.md`. This will allow you to explore RESTful API implementation in multiple programming languages and understand how each language approaches backend server development.
 
