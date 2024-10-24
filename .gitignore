@@ -27,3 +27,6 @@ dist-ssr
 *.sln
 *.sw?
 *.db 
+
+# Ignore Rust target directory
+src/servers/rust-server/target
