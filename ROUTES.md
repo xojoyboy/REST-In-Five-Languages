@@ -1,9 +1,7 @@
 
-# ROUTES.md
+# API Routes Documentation
 
-## API Routes Documentation
-
-This document describes the REST API endpoints for managing users. The server runs on `http://localhost:5001`.
+This document describes the REST API endpoints for managing users. The server runs on `http://localhost:5002`.
 
 ### 1. Get All Users
 - **Endpoint**: `GET /users`
@@ -29,7 +27,7 @@ This document describes the REST API endpoints for managing users. The server ru
 ### 2. Get User by ID
 - **Endpoint**: `GET /users/:id`
 - **Description**: Fetches a specific user by their ID.
-- **Path Parameter**: `id` (number) - The ID of the user.
+- **Path Parameter**: `id` (integer) - The ID of the user.
 - **Response**:
   - **Status**: `200 OK`
   - **Body**: User object.
@@ -62,9 +60,9 @@ This document describes the REST API endpoints for managing users. The server ru
 ### 4. Update User by ID
 - **Endpoint**: `PUT /users/:id`
 - **Description**: Updates a user's information.
-- **Path Parameter**: `id` (number) - The ID of the user.
+- **Path Parameter**: `id` (integer) - The ID of the user.
 - **Request Body**:
-  - **Optional**: `{ "name": "string", "hoursWorked": number }`
+  - **Optional**: `{ "name": "string" }`
 - **Response**:
   - **Status**: `200 OK`
   - **Body**: The updated user object.
@@ -78,9 +76,9 @@ This document describes the REST API endpoints for managing users. The server ru
   - **Status**: `404 Not Found` if the user does not exist.
 
 ### 5. Update Hours Worked for a User
-- **Endpoint**: `PATCH /users/:id/hours`
+- **Endpoint**: `PATCH /users/:id`
 - **Description**: Adds hours to a user's `hoursWorked` field.
-- **Path Parameter**: `id` (number) - The ID of the user.
+- **Path Parameter**: `id` (integer) - The ID of the user.
 - **Request Body**:
   - **Required**: `{ "hoursToAdd": number }`
 - **Response**:
@@ -99,7 +97,7 @@ This document describes the REST API endpoints for managing users. The server ru
 ### 6. Delete User by ID
 - **Endpoint**: `DELETE /users/:id`
 - **Description**: Deletes a specific user by their ID.
-- **Path Parameter**: `id` (number) - The ID of the user.
+- **Path Parameter**: `id` (integer) - The ID of the user.
 - **Response**:
   - **Status**: `200 OK`
   - **Body**: The deleted user object.

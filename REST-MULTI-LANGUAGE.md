@@ -4,7 +4,7 @@
 ## Assignment: Implement a RESTful API in Multiple Languages (in addition to typescript and python)
 
 ### Objective
-Your assignment is to extend the existing project by implementing two additional servers that replicate the functionality of the TypeScript server. This will allow you to explore RESTful API implementation in multiple programming languages and understand how each language approaches backend server development.
+Your assignment is to extend the existing project by implementing two additional servers that replicate the functionality of the TypeScript server and the Python server that implement the routes in `ROUTES.md`. This will allow you to explore RESTful API implementation in multiple programming languages and understand how each language approaches backend server development.
 
 ### Setup Instructions
 
@@ -75,7 +75,7 @@ The test suite implements the following sequence of operations to verify the ser
 You are allowed to use ChatGPT or any other generative AI tools to help generate code for this assignment. Make sure you understand the code and can explain how it works.  In fact, the purpose of this assigment is for you to develop skills in using generativeAI tools to build software.  You are encouraged to use these tools to help you complete the assignment.
 
 ### Assignment Requirements
-Your task is to implement at least two additional servers that provide the same RESTful functionality. Each server should be placed under `src/servers/<language-server>/`. You may choose any programming languages you are comfortable with (e.g., Java, C#, Ruby, Go, etc.).
+Your task is to implement at least two additional servers that provide the same RESTful functionality. Each server should be placed under `src/servers/<language-server>/`. You may choose any programming languages you are comfortable with (e.g., Java, C#, Ruby, Go, etc.).  *Note:* you cannot choose Javascript as one of the other languages.
 
 For each server:
 - **Directory Structure**: Place each server in a separate directory under `src/servers/`. For example, `src/servers/erlang-server/` or `src/servers/java-server/`.
@@ -93,9 +93,10 @@ For each server:
 
 ### Grading Criteria
 - **Functionality**: Each of the two servers (The two additional servers) must pass the test suite outlined above.
-- **Consistency**: Ensure that the endpoints and responses are consistent with the TypeScript server.
+- **Consistency**: Ensure that the endpoints and responses are consistent with the TypeScript and the Python servers
 - **Code Quality**: Ensure your code is clean, well-commented, and follows best practices for the chosen language.
 - **Documentation**: Provide clear instructions in the `README.md` for each server.
+- **Documentation**: Edit the `LESSONS_LEARNED.md` file that captures insights and observations from working with multiple languages.  This is optional, but you might find it useful in the future when you look back on this project.
 
 ### Grade Calculation
 - You get 5 points for each server you implement up to a maximum of 10. 
