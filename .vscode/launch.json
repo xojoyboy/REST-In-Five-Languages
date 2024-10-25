@@ -25,5 +25,23 @@
             "command": "ts-node src/servers/ts-server/server.ts",
             "cwd": "${workspaceFolder}"
         },
+        // test the server
+        {
+            "type": "node-terminal",
+            "name": "Jest All",
+            "request": "launch",
+            "command": "npx jest",
+            "cwd": "${workspaceFolder}"
+        },
+        // debug Python tests
+        {
+            "name": "Python: Unittest",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/servers/python-server/test_server.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "pythonPath": "${workspaceFolder}/src/servers/python-server/venv/bin/python"
+        }
     ]
 }
