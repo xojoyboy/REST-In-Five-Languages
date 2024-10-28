@@ -30,3 +30,6 @@ dist-ssr
 
 # Ignore Rust target directory
 src/servers/rust-server/target
+
+#ignore python __pycache__ directory
+src/servers/python-server/__pycache__
