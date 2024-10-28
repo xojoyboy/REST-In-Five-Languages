@@ -44,7 +44,7 @@
    cargo run
    ```
 
-1. The server will start on port `5002`. You can verify that the server is running by accessing the following URL in your browser or using a tool like `curl`:
+1. The server will start on port `5012`. You can verify that the server is running by accessing the following URL in your browser or using a tool like `curl`:
    ```
    http://localhost:5012/users
    ```
