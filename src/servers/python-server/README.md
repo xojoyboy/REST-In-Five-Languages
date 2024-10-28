@@ -7,15 +7,18 @@
 ## Setup Instructions
 
 ### 1. Create a Virtual Environment
+Do this in the directory src/servers/python-server
 
 #### On macOS/Linux
 ```sh
+cd src/servers/python-server
 python3 -m venv venv
 source venv/bin/activate
 ```
 
 #### On Windows
 ```sh
+cd src/servers/python-server
 python -m venv venv
 venv\Scripts\activate
 ```
