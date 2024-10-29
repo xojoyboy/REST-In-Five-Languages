@@ -29,6 +29,7 @@ dist-ssr
 *.db 
 
 # Ignore Rust target directory
+src/servers/rust-server-juancho/target
 src/servers/rust-server/target
 
 #ignore python __pycache__ directory
