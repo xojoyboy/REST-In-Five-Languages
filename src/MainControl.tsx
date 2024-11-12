@@ -10,8 +10,8 @@ const MainControl: React.FC = () => {
     // State variables to manage different endpoints and user data
     const [endpoint1, setEndpoint1] = useState('5001');
     const [endpoint2, setEndpoint2] = useState('5002');
-    const [endpoint3, setEndpoint3] = useState(''); // CHANGEME to reflect the port number of the third endpoint
-    const [endpoint4, setEndpoint4] = useState(''); // CHANGEME to reflect the port number of the fourth endpoint
+    const [endpoint3, setEndpoint3] = useState('5003'); // Go server port
+    const [endpoint4, setEndpoint4] = useState('5004'); // Java server port
     const [selectedEndpoint, setSelectedEndpoint] = useState('endpoint1');
     const [jsonResult, setJsonResult] = useState('');
     const [userId, setUserId] = useState('');
@@ -255,22 +255,21 @@ const MainControl: React.FC = () => {
                                 }}
                             />
                         </Stack>
-                        {/* Additional endpoints  change the names below. CHANGEME */}
+                        {/* Additional endpoints for Go and Java */}
                         <Stack direction="row" alignItems="center">
-                            <FormControlLabel value="endpoint3" control={<Radio />} label="Endpoint 3" />
+                            <FormControlLabel value="endpoint3" control={<Radio />} label="Go" />
                             <TextField
-                                label="CHANGEME 3 Port"
+                                label="Go Port"
                                 value={endpoint3}
                                 onChange={(e) => setEndpoint3(e.target.value)}
                                 fullWidth
                                 margin="normal"
-
                             />
                         </Stack>
                         <Stack direction="row" alignItems="center">
-                            <FormControlLabel value="endpoint4" control={<Radio />} label="Endpoint 4" />
+                            <FormControlLabel value="endpoint4" control={<Radio />} label="Java" />
                             <TextField
-                                label="CHANGEME 4 Port"
+                                label="Java Port"
                                 value={endpoint4}
                                 onChange={(e) => setEndpoint4(e.target.value)}
                                 fullWidth
